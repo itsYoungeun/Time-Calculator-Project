@@ -1,22 +1,19 @@
-import re
-
 def add_time(start, duration, day=None):
-    # Parsing the `start` time
-    match = re.match(r"(\d+):(\d+)\s?(AM|PM)", start)
-    if not match:
-        return "Error: Invalid start time format."
+    # Parsing the `start` time (12-hour format with AM/PM)
+    start_hour, start_minute_period = start.split(":")
+    start_minute, start_period = start_minute_period.split(" ")
 
-    start_hour = int(match.group(1))  # Extract the hour
-    start_minute = int(match.group(2))  # Extract the minute
-    start_period = match.group(3)  # Extract AM/PM
-
+    start_hour = int(start_hour)
+    start_minute = int(start_minute)
+    start_period = start_period.upper()  # Handle mixed case input like 'am' or 'pm'
+    
     # Convert start time to 24-hour format
     if start_period == "PM" and start_hour != 12:
         start_hour += 12
-    if start_period == "AM" and start_hour == 12:
+    elif start_period == "AM" and start_hour == 12:
         start_hour = 0
 
-    # Parsing `duration`
+    # Parsing the `duration` time
     duration_hour, duration_minute = map(int, duration.split(":"))
 
     # Add duration to start time
@@ -26,7 +23,7 @@ def add_time(start, duration, day=None):
     final_hour_24 = total_hours % 24
     days_later = total_hours // 24
 
-    # Convert back to 12-hour format
+    # Convert the result back to 12-hour format
     final_period = "AM" if final_hour_24 < 12 else "PM"
     final_hour_12 = final_hour_24 % 12
     if final_hour_12 == 0:
@@ -38,8 +35,7 @@ def add_time(start, duration, day=None):
     # Add day of the week if provided
     if day:
         days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        day = day.strip().capitalize()  # Normalize input day
-        start_day_index = days_of_week.index(day)
+        start_day_index = days_of_week.index(day.strip().capitalize())
         final_day = days_of_week[(start_day_index + days_later) % 7]
         new_time += f", {final_day}"
 
