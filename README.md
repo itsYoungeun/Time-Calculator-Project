@@ -1,4 +1,4 @@
-# Build a Time Calculator Project
+## Build a Time Calculator Project
 
 Write a function named add_time that takes in two required parameters and one optional parameter:
 
@@ -16,7 +16,7 @@ If the function is given the optional starting day of the week parameter, then t
 
 Below are some examples of different cases the function should handle. Pay close attention to the spacing and punctuation of the results.
 
-## Example Code
+### Example Code
 
 ```
 add_time('3:00 PM', '3:10')
@@ -31,7 +31,7 @@ add_time('11:43 AM', '00:20')
 add_time('10:10 PM', '3:30')
 # Returns: 1:40 AM (next day)
 
-add_time('11:43 PM', '24:20', 'tueSday')
+add_time('11:43 PM', '24:20', 'Tuesday')
 # Returns: 12:03 AM, Thursday (2 days later)
 
 add_time('6:30 PM', '205:12')
